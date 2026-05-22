@@ -1,0 +1,21 @@
+package com.looqbox.pokeapi.handler
+
+import com.looqbox.pokeapi.dto.error.GeneralError
+import com.looqbox.pokeapi.exception.ApiException
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.ErrorResponse
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RestControllerAdvice
+
+@RestControllerAdvice
+class GlobalExceptionHandler {
+
+    @ExceptionHandler(ApiException::class)
+    fun handleApiException(e : ApiException): ResponseEntity<GeneralError> {
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(GeneralError(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.message ?: "Unknown error occurred"))
+
+    }
+}

@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation ("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.reactivestreams:reactive-streams:1.0.4")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
