@@ -7,7 +7,7 @@ import org.springframework.web.reactive.function.client.WebClient
 @Configuration
 class WebClient {
     private companion object {
-        const val pokeapiUrl = "https://pokeapi.caso/api/v2/"
+        const val pokeapiUrl = "https://pokeapi.co/api/v2/"
     }
 
     @Bean
