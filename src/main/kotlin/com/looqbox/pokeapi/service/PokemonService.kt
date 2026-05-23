@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service
 @Service
 class PokemonService(
     val pokeApiService: PokeapiService,
-    val highlightService: HighlightService
+    val highlightService: HighlightService,
+    val sortingService: SortingService
 ) {
     suspend fun searchPokemon(
-        query: String
+        query: String,
+        sort: SortingMode
     ): SearchPokemonResponse {
         val pokemonListApi =  this.pokeApiService.getAllPokemon()
             ?:throw ApiException("Failed to fetch pokemon list")
@@ -22,12 +24,17 @@ class PokemonService(
             .results
             .filterAndTransform(query) { it.name }
 
+        val sortedPokemonList = this.sortingService.quickSort(
+            result,
+            sort,
+        ) { it }
 
-        return SearchPokemonResponse(result = result)
+        return SearchPokemonResponse(result = sortedPokemonList)
     }
 
     suspend fun highlightPokemon(
-        query: String
+        query: String,
+        sort: SortingMode
     ): HighlightPokemonResponse {
         val pokemonListApi = this.pokeApiService.getAllPokemon()
             ?:throw ApiException("Failed to fetch pokemon list")
@@ -38,7 +45,12 @@ class PokemonService(
                 PokemonHighlight(it.name, this.highlightService.highlightSubstring(it.name, query))
             }
 
-        return HighlightPokemonResponse(result = result)
+        val sortedPokemonList = this.sortingService.quickSort(
+            result,
+            sort,
+        ) { it.name }
+
+        return HighlightPokemonResponse(result = sortedPokemonList)
     }
 
     fun <T> List<PokemonData>.filterAndTransform(substring: String, transform: (PokemonData) -> T): List<T> {
