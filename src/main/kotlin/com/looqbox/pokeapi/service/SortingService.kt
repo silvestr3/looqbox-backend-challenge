@@ -1,5 +1,7 @@
 package com.looqbox.pokeapi.service
 
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
 
 enum class SortingMode {
@@ -21,12 +23,12 @@ enum class SortingMode {
 
 @Service
 class SortingService {
-    fun <T> quickSort(
+    suspend fun <T> quickSort(
         list: List<T>,
         mode: SortingMode,
         accessor: (T) -> String
     ): List<T> {
-        if (list.isEmpty() || list.count() == 1) return list
+        if (list.isEmpty() || list.size == 1) return list
 
         val pivot = list.random()
 
@@ -38,14 +40,20 @@ class SortingService {
             when {
                 compare(accessor(it), accessor(pivot), mode) > 0 -> right.add(it)
                 compare(accessor(it), accessor(pivot), mode) < 0 -> left.add(it)
-                compare(accessor(it), accessor(pivot), mode) == 0 -> equal.add(it)
+                else -> equal.add(it)
             }
         }
 
-        val sortedLeft = quickSort(left, mode, accessor)
-        val sortedRight = quickSort(right, mode, accessor)
+        return if (list.size > 1000) {
+            coroutineScope {
+                val sortedLeft = async { quickSort(left, mode, accessor) }
+                val sortedRight = async { quickSort(right, mode, accessor) }
 
-        return sortedLeft + equal + sortedRight
+                sortedLeft.await() + equal + sortedRight.await()
+            }
+        } else {
+            quickSort(left, mode, accessor) + equal + quickSort(right, mode, accessor)
+        }
     }
 
     fun compare(a: String, b: String, mode: SortingMode): Int {
