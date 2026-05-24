@@ -3,6 +3,7 @@ package com.looqbox.pokeapi.service
 import com.looqbox.pokeapi.dto.HighlightPokemonResponse
 import com.looqbox.pokeapi.dto.SearchPokemonResponse
 import com.looqbox.pokeapi.model.PokemonHighlight
+import com.looqbox.pokeapi.model.SortingMode
 import com.looqbox.pokeapi.model.exception.ApiException
 import com.looqbox.pokeapi.model.pokeapi.PokemonData
 import org.springframework.stereotype.Service

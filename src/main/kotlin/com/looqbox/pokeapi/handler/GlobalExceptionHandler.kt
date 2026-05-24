@@ -1,8 +1,8 @@
 package com.looqbox.pokeapi.handler
 
 import com.looqbox.pokeapi.dto.error.GeneralError
+import com.looqbox.pokeapi.model.SortingMode
 import com.looqbox.pokeapi.model.exception.ApiException
-import com.looqbox.pokeapi.service.SortingMode
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler

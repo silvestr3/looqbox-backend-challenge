@@ -2,8 +2,8 @@ package com.looqbox.pokeapi.controller
 
 import com.looqbox.pokeapi.dto.HighlightPokemonResponse
 import com.looqbox.pokeapi.dto.SearchPokemonResponse
+import com.looqbox.pokeapi.model.SortingMode
 import com.looqbox.pokeapi.service.PokemonService
-import com.looqbox.pokeapi.service.SortingMode
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam

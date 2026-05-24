@@ -1,13 +1,9 @@
 package com.looqbox.pokeapi.service
 
+import com.looqbox.pokeapi.model.SortingMode
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import org.springframework.stereotype.Service
-
-enum class SortingMode {
-    ALPHABETICAL,
-    LENGTH
-}
 
 /*
 * Quick Sort
