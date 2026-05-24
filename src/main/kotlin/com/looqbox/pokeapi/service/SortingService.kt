@@ -33,9 +33,10 @@ class SortingService {
         val right = mutableListOf<T>()
 
         list.forEach {
-            when {
-                compare(accessor(it), accessor(pivot), mode) > 0 -> right.add(it)
-                compare(accessor(it), accessor(pivot), mode) < 0 -> left.add(it)
+            val comparison = compare(accessor(it), accessor(pivot), mode)
+            when  {
+                comparison > 0 -> right.add(it)
+                comparison < 0 -> left.add(it)
                 else -> equal.add(it)
             }
         }
